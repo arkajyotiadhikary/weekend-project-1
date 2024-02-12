@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 import { API_BASE_URL, APP_KEY } from "./apiConfig";
 
 // create axios instance with default settings
@@ -16,7 +16,7 @@ axiosInstance.interceptors.request.use(
             // we can add auth here
             return config;
       },
-      (error: any) => {
+      (error: AxiosError) => {
             return Promise.reject(error);
       }
 );
@@ -25,8 +25,8 @@ axiosInstance.interceptors.response.use(
       (res: AxiosResponse) => {
             return res;
       },
-      (err: any) => {
-            return Promise.reject(err);
+      (error: AxiosError) => {
+            return Promise.reject(error);
       }
 );
 

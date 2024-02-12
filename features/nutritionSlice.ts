@@ -1,21 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { NutritionData } from "../types";
 
-interface NutriState {
-      calories: number;
-      carbohydrates_total_g: number;
-      cholesterol_mg: number;
-      fat_saturated_g: number;
-      fat_total_g: number;
-      fiber_g: number;
-      name: string;
-      potassium_mg: number;
-      protein_g: number;
-      serving_size_g: number;
-      sodium_mg: number;
-      sugar_g: number;
-}
-
-const initialState: NutriState = {
+const initialState: NutritionData = {
       calories: 0,
       carbohydrates_total_g: 0,
       cholesterol_mg: 0,
@@ -34,7 +20,7 @@ const nutritionSlice = createSlice({
       name: "nutrition",
       initialState,
       reducers: {
-            setValue: (state, action: PayloadAction<NutriState>) => {
+            setValue: (state, action: PayloadAction<NutritionData>) => {
                   state.calories = action.payload.calories;
                   state.carbohydrates_total_g = action.payload.carbohydrates_total_g;
                   state.cholesterol_mg = action.payload.cholesterol_mg;

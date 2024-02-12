@@ -4,16 +4,12 @@ import { View, Text } from "react-native";
 import styles from "../../styles/ResultContainer";
 
 import { RootState } from "../../store";
-import { UseSelector, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+
+import { NutritionData } from "../../types";
 
 const ResultContainer: FC = () => {
-      const values = useSelector((state: RootState) => state.nutrition);
-
-      useEffect(() => {
-            setData(values);
-      }, [values]);
-
-      const [data, setData] = useState({
+      const [data, setData] = useState<NutritionData>({
             calories: 0,
             carbohydrates_total_g: 0,
             cholesterol_mg: 0,
@@ -27,6 +23,12 @@ const ResultContainer: FC = () => {
             sodium_mg: 0,
             sugar_g: 0,
       });
+
+      const values = useSelector((state: RootState) => state.nutrition);
+
+      useEffect(() => {
+            setData(values);
+      }, [values]);
 
       return (
             <View style={styles.resultContainer}>

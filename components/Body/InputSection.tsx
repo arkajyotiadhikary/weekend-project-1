@@ -1,7 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { View, TextInput, TouchableOpacity } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
+import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
 
 import styles from "../../styles/InputSection";
 
@@ -9,28 +9,21 @@ import { useDispatch } from "react-redux";
 import { setValue } from "../../features/nutritionSlice";
 import { fetchData } from "../../api/services/fetchNutri";
 
-type HandleSubmit = (e?: any) => void;
-
 const InputSection: FC = () => {
-      let seachIngr: string;
-
       const dispatch = useDispatch();
+      const [searchIngr, setSearchIngr] = useState<string>("");
 
-      // NOTE check if handle change funcitons need any type in typescript
       const handleChage = (text: string) => {
-            seachIngr = text;
+            setSearchIngr(text);
       };
 
-      const handleSubmit: HandleSubmit = () => {
-            (async () => {
-                  try {
-                        const result = await fetchData(seachIngr);
-                        dispatch(setValue(result.items[0]));
-                        console.log(result); // Log the fetched data
-                  } catch (error) {
-                        console.error("Error fetching data:", error);
-                  }
-            })();
+      const handleSubmit = async () => {
+            try {
+                  const result = await fetchData(searchIngr);
+                  dispatch(setValue(result.items[0]));
+            } catch (error) {
+                  console.error("Error fetching data:", error);
+            }
       };
 
       return (
@@ -43,7 +36,7 @@ const InputSection: FC = () => {
                         />
                   </View>
                   <TouchableOpacity onPress={handleSubmit}>
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                        <FontAwesomeIcon icon={faSearch} />
                   </TouchableOpacity>
             </View>
       );
